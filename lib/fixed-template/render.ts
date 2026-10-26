@@ -39,7 +39,7 @@ function slugOnly(value: string) { return value.replace(/^\/+|\/+$/g, ""); }
 
 export function templateNavLinks(nav: TemplateLink[], page: "home" | "inner", currentSlug?: string | null): string {
   return nav.filter((item)=>slugOnly(item.slug)).map((item)=>{
-    const active = page === "inner" && currentSlug && slugOnly(item.slug) === slugOnly(currentSlug);
+    const active = Boolean(currentSlug) && slugOnly(item.slug) === slugOnly(currentSlug);
     return `<a class="nav-link${active ? " active" : ""}" data-nav href="${safeAttr(item.href)}">${esc(item.label)}</a>`;
   }).join("");
 }
@@ -180,6 +180,11 @@ export function renderFixedTemplate(input:FixedTemplateInput):string{
   const {pack,html:source}=templateSource(input.skin,input.page); const paint=resolveAccent(pack.skin,input.accentColorId);
   const currentLabel=input.page==="inner"?(input.nav.find(x=>slugOnly(x.slug)===slugOnly(input.currentSlug||""))?.label||input.heading||"Guide"):null;
   let html=source;
+  if (input.skin === "resource" && input.page === "home") {
+    // Source template has an unmatched </div> inside the hero. Keep the hero
+    // image inside the section instead of relying on browser error recovery.
+    html=html.replace(/(<section class="panel hero">[\s\S]*?<\/p>)<\/div>(<div class="hero-cover)/, "$1$2");
+  }
   html=replaceBrand(html,input);
   html=html.replaceAll('href="home.html"',`href="${safeAttr(input.homeHref)}"`);
   html=replaceNav(html,templateNavLinks(input.nav,input.page,input.currentSlug));
@@ -208,5 +213,24 @@ export function scopeTemplateCss(css:string,scope:string):string{
     const brace=source.indexOf("{",index);if(brace<0)break;const selector=source.slice(index,brace).trim(),close=source.indexOf("}",brace);if(close<0)break;out+=scopeSelectorList(selector,scope)+"{"+source.slice(brace+1,close)+"}";index=close+1;
   }return out;
 }
-export function scopedTemplateCss(skin:string,accentColorId?:string|null):string{const {pack,html:home}=templateSource(skin,"home"),{html:inner}=templateSource(skin,"inner"),paint=resolveAccent(pack.skin,accentColorId);const raw=extractStyle(home)+"\\n"+extractStyle(inner)+"\\n"+accentOverrideCss(pack.skin,paint);return scopeTemplateCss(raw,`body[data-fixed-template="${pack.skin}"]`)}
+export function scopedTemplateCss(skin:string,accentColorId?:string|null):string{const {pack,html:home}=templateSource(skin,"home"),{html:inner}=templateSource(skin,"inner"),paint=resolveAccent(pack.skin,accentColorId);const raw=extractStyle(home)+"\\n"+extractStyle(inner)+"\\n"+accentOverrideCss(pack.skin,paint);const layoutFix = `
+.top .head{max-width:1160px}
+.top .brand{color:#fff}
+.top .nav-link{white-space:nowrap;min-height:40px}
+.hero.panel{padding:clamp(18px,3vw,30px)}
+.hero .hero-cover{height:clamp(200px,25vw,310px)!important;max-width:760px!important;margin:20px auto 0!important;overflow:hidden!important;display:block!important}
+.hero .hero-cover .template-banner-image{width:100%!important;height:100%!important;max-height:none!important;min-height:0!important;object-fit:cover!important;object-position:center 38%}
+@media(max-width:820px){
+.top .head{flex-wrap:wrap;gap:10px;padding:12px 0}
+.top .head .nav{width:100%;margin-left:0;max-width:100%;display:flex;gap:6px;overflow-x:auto;padding:3px 0 7px;scrollbar-width:thin}
+.top .head .nav-link{flex:0 0 auto;display:inline-flex;align-items:center;min-height:42px;padding:8px 12px;white-space:nowrap}
+.hero .hero-cover{height:210px!important;max-width:100%!important}
+}
+@media(max-width:480px){
+.top .brand{font-size:18px}
+.top .brand strong{font-size:18px}
+.top .head{padding:10px 0}
+.hero .hero-cover{height:180px!important}
+}
+`;return scopeTemplateCss(raw+"\n"+layoutFix, `body[data-fixed-template="${pack.skin}"]`)}
 export function renderFixedDocument(input:FixedTemplateInput):{html:string;body:string;chrome:string;rest:string}{const html=renderFixedTemplate(input),body=extractBody(html),parts=splitFixedChrome(body,templatePack(input.skin).skin);return{html,body,...parts}}

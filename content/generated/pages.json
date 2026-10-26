@@ -118,6 +118,79 @@
         ]
       },
       {
+        "id": "shop-categories-observed",
+        "heading": "What Players Report Seeing in the Weapon Shop",
+        "intro": "A dated third-party reading of the October 25 shop UI provides more detailed categories than the short official Roblox listing. Treat these as reported on-screen observations, not as a developer-published master inventory.",
+        "subsections": [
+          {
+            "heading": "Earned and Premium Tabs Are Separate",
+            "paragraphs": [
+              "The independent shop review describes six tabs above the Robux divider: GUNS, MELEE, THROWABLES, SPECIAL, HALLOWEEN and ZOMBIE NIGHT. It also reports PREMIUM, PHYSICS, SPORTS, TOYS, WEATHER and EXPLOSIVES in the paid area. Those are useful labels to look for when the current shop appears different from the limited list of twelve names in the public Roblox description.",
+              "The reported screen counts included 11 guns, 7 melee, 6 throwables, 4 special and 6 Halloween items, with 6 Zombie Night cards shown separately. These are reports from October 25 gameplay recordings described by another guide, not totals independently counted by this site. The current client may change after updates."
+            ]
+          },
+          {
+            "heading": "Know What You Are Comparing Before Spending",
+            "paragraphs": [
+              "The same source reports five Robux weapon packs with four items per pack and separately priced heavy-weapon passes. It also notes that some names, including C4, appear under more than one acquisition route. Do not assume a second listing represents a different weapon.",
+              "For an actual purchase decision, compare the current in-game pack description and the specific weapon access screen. A dated price from someone else's account should not be used as the final charge at checkout."
+            ]
+          }
+        ],
+        "table": {
+          "caption": "Reported weapon-shop categories (third-party observations dated October 25)",
+          "columns": [
+            "Reported in-game tab",
+            "Cards reported",
+            "Access grouping"
+          ],
+          "rows": [
+            [
+              "GUNS",
+              "11",
+              "Kill-progression area"
+            ],
+            [
+              "MELEE",
+              "7",
+              "Kill-progression area"
+            ],
+            [
+              "THROWABLES",
+              "6",
+              "Kill-progression area"
+            ],
+            [
+              "SPECIAL",
+              "4",
+              "Kill-progression area"
+            ],
+            [
+              "HALLOWEEN",
+              "6",
+              "Kill-progression area"
+            ],
+            [
+              "ZOMBIE NIGHT",
+              "6",
+              "Event-labeled area; availability must be checked"
+            ],
+            [
+              "PHYSICS / SPORTS / TOYS / WEATHER / EXPLOSIVES",
+              "4 per tab",
+              "Paid pack area"
+            ]
+          ]
+        },
+        "links": [
+          {
+            "label": "How to read a locked weapon card",
+            "slug": "how-to-unlock-weapons",
+            "description": "Learn the progress-counter meaning and how to claim unlocked equipment."
+          }
+        ]
+      },
+      {
         "id": "weapon-categories",
         "heading": "All Ragdoll Reality Weapons Confirmed by the Game Page",
         "intro": "Group names by what a player is looking for in the equipment list. These are plain-language navigation categories; they do not claim to reflect an official rarity system or upgrade tree.",
@@ -211,6 +284,13 @@
             "paragraphs": [
               "A newly claimed weapon should be added only after its name appears in a dated official description or is independently documented in the live experience. The review date is shown above. Unattributed community guesses or a competitor's URL name are not confirmation of a new piece of equipment.",
               "Source: the official Roblox experience description, which names the twelve entries in this directory. If the developer publishes precise counts, availability or stats, those fields can be added with a new review date."
+            ]
+          },
+          {
+            "heading": "Dated Shop Evidence and Limits",
+            "paragraphs": [
+              "The category counts and paid-pack grouping above were reported by ragdollreality-roblox.wiki from two October 25 gameplay recordings. They have not been independently reproduced by this site. You can review the dated source at https://ragdollreality-roblox.wiki/weapons/. The official Roblox listing separately confirms the 20+ weapons headline and kills-based access, but not the specific tab counts.",
+              "The best long-term improvement would be original labeled screenshots from a current game session and a dated comparison when new weapons arrive. Until those are available, this page shows both the official evidence and the clearly attributed secondhand observations."
             ]
           }
         ],
@@ -342,6 +422,75 @@
         ]
       },
       {
+        "id": "reading-shop-counter",
+        "heading": "How to Read a Weapon Unlock Card",
+        "intro": "A recent secondary-source shop review documents a concrete progress-card pattern: a fraction ending in KILLS shows the current total against a requirement, and an UNLOCK action must be claimed. This is dated player-observed evidence, not wording from the official game description.",
+        "subsections": [
+          {
+            "heading": "Calculate the Remaining Kills",
+            "paragraphs": [
+              "If a shop card shows 470 / 500 KILLS, subtract the current total from the requirement: 500 − 470 = 30 kills remaining. The denominator describes what that card asks for; it does not mean you still need 500 additional kills. Read the actual card on your account before doing this subtraction.",
+              "Independent October 25 shop observations published by another guide reported cards for Pumpkin Grenade (500 kills), Voodoo Doll (800), Bat Swarm (1,000), Ghost Cannon (1,500) and Witch Broom (2,000). These were claimed as on-screen requirements in one recorded session, NOT a verified current official table; an update may change them."
+            ]
+          },
+          {
+            "heading": "When UNLOCK Appears, Claim the Card",
+            "paragraphs": [
+              "The dated video-based report says an item can remain outside the owned count until its UNLOCK card is clicked. That offers a concrete troubleshooting check: if your visible kills meet the number but the item still looks unavailable, inspect whether the card itself now has a claim action.",
+              "This is a report about a shop interface, not a guarantee for every platform or game version. Do not spend Robux or supply account details to a third party while troubleshooting. The current in-game client remains the source of truth."
+            ]
+          }
+        ],
+        "table": {
+          "caption": "Example remaining-kill calculations — values reported from October 25 player recordings",
+          "columns": [
+            "Reported item",
+            "Reported requirement",
+            "Example at 470 kills",
+            "Status"
+          ],
+          "rows": [
+            [
+              "Pumpkin Grenade",
+              "500",
+              "30 remaining",
+              "Third-party screen report"
+            ],
+            [
+              "Voodoo Doll",
+              "800",
+              "330 remaining",
+              "Third-party screen report"
+            ],
+            [
+              "Bat Swarm",
+              "1,000",
+              "530 remaining",
+              "Third-party screen report"
+            ],
+            [
+              "Ghost Cannon",
+              "1,500",
+              "1,030 remaining",
+              "Third-party screen report"
+            ],
+            [
+              "Witch Broom",
+              "2,000",
+              "1,530 remaining",
+              "Third-party screen report"
+            ]
+          ]
+        },
+        "links": [
+          {
+            "label": "Weapons directory and shop categories",
+            "slug": "weapons",
+            "description": "Compare confirmed equipment names with dated reports of shop groupings."
+          }
+        ]
+      },
+      {
         "id": "progress-reference",
         "heading": "Weapon Unlock Requirements and Progress",
         "intro": "There is a meaningful distinction between a weapon being listed in the game's description and a requirement that has been independently verified. Use this reference to avoid false unlock tables.",
@@ -448,6 +597,13 @@
               "If you return after a major update and discover new weapons or different locks, use the live interface as the immediate source of truth. Save the new names and observed requirements with a date before sharing them with others.",
               "For context on developer updates and the reported next event, see the events page. For category and item names, see the weapons directory."
             ]
+          },
+          {
+            "heading": "Where the Example Counts Came From",
+            "paragraphs": [
+              "The dated values in the example table were extracted from the October 25 player-recording review at https://ragdollreality-roblox.wiki/guides/how-to-unlock-weapons/. This guide does not claim to have played the Roblox experience or measured these values independently. It records them as a sourced starting point and emphasizes the numbers displayed to each visitor in their current game.",
+              "The official game's public description confirms only that kills unlock weapons. Any conflicting unlock number on the live card should take precedence over a published sample from another day."
+            ]
           }
         ],
         "links": [
@@ -488,6 +644,10 @@
       {
         "question": "Can I purchase an unlock instead?",
         "answer": "Some Roblox experiences have stores, but this game's public description does not define an alternate purchase route for every weapon. Verify current store details before spending."
+      },
+      {
+        "question": "Why does a weapon still show as locked after reaching enough kills?",
+        "answer": "A third-party October 25 shop recording describes an UNLOCK button that has to be claimed even after the threshold is reached. Look for this action in your live shop; this site's report has not independently verified every item."
       }
     ],
     "relatedSlugs": [

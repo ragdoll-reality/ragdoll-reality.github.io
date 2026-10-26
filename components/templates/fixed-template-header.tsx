@@ -25,14 +25,14 @@ export function FixedTemplateHeader({ links }: { links: InternalLink[] }) {
     }));
   const rendered = renderFixedDocument({
     skin,
-    page,
+    page: "home",
     accentColorId: siteConfig.theme.accentColorId,
     gameName: siteConfig.game.name || siteConfig.shortName,
     nav,
     currentSlug,
     homeHref: "/",
     logoUrl: assetPath(siteConfig.assets.logo),
-    bannerUrl: page === "home" ? assetPath(siteConfig.assets.cover) : null,
+    bannerUrl: null,
     heading: page === "home" ? homePage.hero.heading : null,
     lead: page === "home" ? homePage.hero.lead : null,
   });

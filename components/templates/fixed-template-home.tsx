@@ -1,5 +1,4 @@
 import { NativeAdSlot } from "@/components/integrations/native-ad-slot";
-import { Faq } from "@/components/site/faq";
 import { JsonLd } from "@/components/site/json-ld";
 import { siteConfig } from "@/config/site";
 import { siteSkin } from "@/config/skin";
@@ -13,7 +12,10 @@ function supplement(home: HomePageDefinition): string {
   const gameUrl=siteConfig.game.officialUrl;
   const external=gameUrl&&gameUrl.startsWith("https://www.roblox.com/games/")?'<p class="fixed-official"><a href="'+esc(gameUrl)+'" rel="noopener noreferrer">Play Ragdoll Reality on Roblox</a> · Independent fan-made guide; not affiliated with the developer or Roblox.</p>':"";
   const sources=gameUrl?'<p class="fixed-sources">Source: <a href="'+esc(gameUrl)+'" rel="noopener noreferrer">official developer description</a>.</p>':"";
-  return '<div class="fixed-rich">'+external+renderFixedSections(home.sections)+sources+'</div>';
+  const faq=home.faq.length
+    ? '<section id="faq" class="fixed-rich-section"><h2>Frequently Asked Questions</h2>'+home.faq.map(item=>'<div class="fixed-rich-sub"><h3>'+esc(item.question)+'</h3><p>'+esc(item.answer)+'</p></div>').join("")+'</section>'
+    : "";
+  return '<div class="fixed-rich">'+external+renderFixedSections(home.sections)+faq+sources+'</div>';
 }
 
 export function FixedTemplateHome({ home }: { home: HomePageDefinition }) {
@@ -45,9 +47,6 @@ export function FixedTemplateHome({ home }: { home: HomePageDefinition }) {
       <JsonLd data={homeSchemas(home)} />
       <div dangerouslySetInnerHTML={{ __html: rendered.rest }} />
       <div className="site-container"><NativeAdSlot /></div>
-      {home.faq.length ? (
-        <div className="site-container"><Faq items={home.faq} /></div>
-      ) : null}
     </>
   );
 }
