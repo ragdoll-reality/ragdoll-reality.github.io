@@ -1,0 +1,64 @@
+{
+  "readyForLaunch": false,
+  "siteName": "Ragdoll Reality Guide",
+  "shortName": "Ragdoll Reality",
+  "description": "Ragdoll Reality guides, walkthroughs, tips, updates, and reference information.",
+  "language": "en",
+  "locale": "en_US",
+  "authorName": "Editorial Team",
+  "theme": {
+    "preset": "obsidian-red",
+    "overrides": {
+      "background": "220 16% 96%",
+      "foreground": "0 0% 7%",
+      "card": "220 6% 100%",
+      "card-foreground": "0 0% 7%",
+      "primary": "217 91% 60%",
+      "primary-foreground": "0 0% 0%",
+      "secondary": "220 16% 89%",
+      "muted": "220 16% 91%",
+      "muted-foreground": "0 0% 7%",
+      "border": "220 16% 80%",
+      "radius": ".35rem",
+      "card-shadow": "0 8px 18px rgba(15, 23, 42, .06)",
+      "hero-gradient": "linear-gradient(180deg, hsl(217 91% 60% / .08), transparent 70%)",
+      "background-pattern": "none",
+      "font-sans": "\"Source Sans 3\", ui-sans-serif, system-ui, sans-serif",
+      "font-heading": "\"Source Sans 3\", ui-sans-serif, system-ui, sans-serif",
+      "heading-weight": "700",
+      "heading-letter-spacing": "-0.02em"
+    },
+    "skin": "resource",
+    "headerStyle": "solid",
+    "componentStyle": "sharp",
+    "accentColorId": "blue",
+    "colorMode": "custom",
+    "background": "#F4F5F7",
+    "accent": "#3B82F6",
+    "fontId": "source-sans"
+  },
+  "hosting": {
+    "siteUrl": "https://ragdoll-reality.github.io",
+    "basePath": "",
+    "customDomain": null
+  },
+  "allowedExternalDomains": [
+    "www.roblox.com"
+  ],
+  "assets": {
+    "logo": "/images/ragdoll-reality-logo.png",
+    "cover": "/images/ragdoll-reality-cover.png",
+    "openGraph": "/images/ragdoll-reality-og.svg",
+    "favicon": "/images/ragdoll-reality-logo.png"
+  },
+  "game": {
+    "name": "Ragdoll Reality",
+    "platform": "Roblox",
+    "developer": "",
+    "genre": "",
+    "officialUrl": "https://www.roblox.com/games/127932298993998"
+  },
+  "seo": {
+    "titleTemplate": "%s | Ragdoll Reality Guide"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "enabled": true,
+  "slug": "",
+  "pageType": "home",
+  "title": "Ragdoll Reality Guide",
+  "description": "Guides, walkthroughs, tips, updates, and reference information for Ragdoll Reality.",
+  "navVisible": true,
+  "hero": {
+    "eyebrow": "Game guide",
+    "heading": "Ragdoll Reality",
+    "lead": "Guides, walkthroughs, tips, updates, and reference information for Ragdoll Reality.",
+    "supportingText": "Browse current game information and practical guides.",
+    "secondaryLink": {
+      "label": "Open official game page",
+      "url": "https://www.roblox.com/games/127932298993998"
+    }
+  },
+  "sections": [
+    {
+      "id": "start-here",
+      "heading": "Game information",
+      "paragraphs": [
+        "Current Ragdoll Reality guides and reference information will be published here."
+      ]
+    }
+  ],
+  "faq": [],
+  "screenshots": [],
+  "lastReviewed": "2026-10-26"
+}
