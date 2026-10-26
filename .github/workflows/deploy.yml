@@ -80,3 +80,75 @@ jobs:
           done
           curl -fLsS --retry 6 --retry-delay 5 --retry-all-errors "${base}/robots.txt" | grep -qi 'sitemap:'
           echo "PASS: six live canonical routes, headings, sitemap and robots"
+
+      - name: Browser responsive and page-order verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-audit --no-fund --no-save --prefix /tmp/ragdoll-ui-qa playwright@1.56.1
+          /tmp/ragdoll-ui-qa/node_modules/.bin/playwright install chromium-headless-shell
+          cat > /tmp/ragdoll-ui-check.cjs <<'SITE_QA_JS'
+          const { chromium } = require("/tmp/ragdoll-ui-qa/node_modules/playwright");
+          const origin="https://ragdoll-reality.github.io";
+          const routes=["/","/weapons/","/how-to-unlock-weapons/","/zombies/","/horde-mode/","/events/"];
+          const navPaths=routes.slice(1);
+          (async()=>{
+           const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+           let checked=0;
+           for(const width of [390,768,1440]){
+            const context=await browser.newContext({viewport:{width,height:900},deviceScaleFactor:1});
+            const page=await context.newPage();
+            let homeColor="";
+            for(const route of routes){
+             const response=await page.goto(origin+route,{waitUntil:"domcontentloaded",timeout:40000});
+             if(!response?.ok())throw new Error("HTTP error "+route+" "+response?.status());
+             const data=await page.evaluate(()=>{
+              const header=document.querySelector("header.top");
+              const footer=document.querySelector("footer.global-footer");
+              const faq=document.querySelector("main #faq");
+              const cover=document.querySelector(".hero .hero-cover");
+              return {
+               headerFound:!!header,headerColor:header?getComputedStyle(header).backgroundColor:"",
+               nav:[...document.querySelectorAll("header.top nav a")].map(a=>a.getAttribute("href")),
+               active:[...document.querySelectorAll("header.top nav a.active")].map(a=>a.getAttribute("href")),
+               h1:document.querySelectorAll("main h1").length,
+               h2:document.querySelectorAll("main h2").length,
+               h3:document.querySelectorAll("main h3").length,
+               faqInMain:!!faq,faqBeforeFooter:!!faq&&!!footer&&Boolean(faq.compareDocumentPosition(footer)&Node.DOCUMENT_POSITION_FOLLOWING),
+               hasFooter:!!footer,footerLinks:[...document.querySelectorAll("footer.global-footer a")].map(a=>a.getAttribute("href")),
+               coverHeight:cover?.getBoundingClientRect().height??0,
+               overflow:document.documentElement.scrollWidth-innerWidth,
+               canonical:document.querySelector('link[rel="canonical"]')?.href,
+               textLength:document.querySelector("main")?.innerText.length??0
+              };
+             });
+             const fail=(test,reason)=>{if(!test)throw new Error(width+"px "+route+" "+reason+" "+JSON.stringify(data));};
+             if(route==="/")homeColor=data.headerColor;
+             fail(data.headerFound&&data.headerColor===homeColor&&data.headerColor!=="rgba(0, 0, 0, 0)","inconsistent header");
+             fail(data.nav.length===5&&navPaths.every(path=>data.nav.includes(path)),"missing global navigation");
+             fail(data.h1===1&&data.h2>=2&&data.h3>=2,"missing heading structure");
+             fail(data.hasFooter&&navPaths.every(path=>data.footerLinks.includes(path)),"missing global footer links");
+             fail(data.faqInMain&&data.faqBeforeFooter,"FAQ outside content or after footer");
+             fail(data.overflow<=3,"horizontal viewport overflow");
+             fail(data.canonical===origin+route,"wrong canonical");
+             fail(data.textLength>2200,"insufficient visible page content");
+             if(route==="/")fail(data.coverHeight>=100&&data.coverHeight<=320,"hero image occupies excessive screen");
+             else fail(data.active.length===1&&data.active[0]===route,"incorrect active nav state");
+             console.log("UI PASS",width+"px",route,"cover="+Math.round(data.coverHeight),"overflow="+data.overflow);
+             checked++;
+            }
+            if(width===390){
+              await page.goto(origin+"/",{waitUntil:"domcontentloaded"});
+              const link=page.locator('header.top nav a[href="/weapons/"]');
+              await link.click();
+              if(!page.url().endsWith("/weapons/"))throw new Error("mobile nav link did not navigate");
+              console.log("UI PASS: mobile nav click navigates");
+            }
+            await context.close();
+           }
+           await browser.close();
+           console.log("UI PASS:",checked,"rendered viewport/page combinations");
+          })().catch(e=>{console.error(e);process.exit(1)});
+          
+          SITE_QA_JS
+          node /tmp/ragdoll-ui-check.cjs
