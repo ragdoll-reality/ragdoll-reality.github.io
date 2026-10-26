@@ -127,6 +127,14 @@ jobs:
              fail(data.headerFound&&data.headerColor===homeColor&&data.headerColor!=="rgba(0, 0, 0, 0)","inconsistent header");
              fail(data.nav.length===5&&navPaths.every(path=>data.nav.includes(path)),"missing global navigation");
              fail(data.h1===1&&data.h2>=2&&data.h3>=2,"missing heading structure");
+             const emptyHeadings=await page.locator("main h1, main h2, main h3").evaluateAll(nodes=>nodes.map(n=>({tag:n.tagName,text:n.textContent?.trim()||""})).filter(x=>!x.text));
+             fail(emptyHeadings.length===0,"empty SEO heading: "+JSON.stringify(emptyHeadings));
+             if(route==="/"){
+              const placeholders=await page.locator("main .layout .panel, main .row:empty").count();
+              fail(placeholders===0,"unused template demo panels present: "+placeholders);
+              const sectionHeading=await page.locator('main section#section > h2').innerText();
+              fail(sectionHeading==="Explore Ragdoll Reality Guides","missing guide directory heading");
+             }
              fail(data.hasFooter&&navPaths.every(path=>data.footerLinks.includes(path)),"missing global footer links");
              fail(data.faqInMain&&data.faqBeforeFooter,"FAQ outside content or after footer");
              fail(data.overflow<=3,"horizontal viewport overflow");

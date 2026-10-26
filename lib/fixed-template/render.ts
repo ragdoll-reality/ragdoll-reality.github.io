@@ -181,9 +181,17 @@ export function renderFixedTemplate(input:FixedTemplateInput):string{
   const currentLabel=input.page==="inner"?(input.nav.find(x=>slugOnly(x.slug)===slugOnly(input.currentSlug||""))?.label||input.heading||"Guide"):null;
   let html=source;
   if (input.skin === "resource" && input.page === "home") {
-    // Source template has an unmatched </div> inside the hero. Keep the hero
-    // image inside the section instead of relying on browser error recovery.
+    // The approved skin contains demo-only panels with empty h2 elements and
+    // blank cards. Remove them; keep the populated quick links and real content.
     html=html.replace(/(<section class="panel hero">[\s\S]*?<\/p>)<\/div>(<div class="hero-cover)/, "$1$2");
+    const quickHeading='<section class="panel" style="margin-top:18px" id="section"><h2></h2>';
+    const demoPanel=/<div class="layout"><div class="two">[\s\S]*?<\/aside><\/div><\/main>/;
+    if (!html.includes(quickHeading) || !demoPanel.test(html)) {
+      throw new Error("The resource homepage template changed: cannot remove blank demo panels safely");
+    }
+    html=html.replace(quickHeading,
+      '<section class="panel" style="margin-top:18px" id="section"><h2>Explore Ragdoll Reality Guides</h2>');
+    html=html.replace(demoPanel, "</main>");
   }
   html=replaceBrand(html,input);
   html=html.replaceAll('href="home.html"',`href="${safeAttr(input.homeHref)}"`);
