@@ -56,3 +56,27 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify live SEO pages and infrastructure
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://ragdoll-reality.github.io"
+          for path in / /weapons/ /how-to-unlock-weapons/ /zombies/ /horde-mode/ /events/; do
+            url="${base}${path}"
+            echo "Checking live page: ${url}"
+            curl -fLsS --retry 10 --retry-delay 5 --retry-all-errors "${url}" -o /tmp/ragdoll-page.html
+            grep -qi '<h1' /tmp/ragdoll-page.html
+            grep -qi '<h2' /tmp/ragdoll-page.html
+            grep -qi '<h3' /tmp/ragdoll-page.html
+            grep -q 'rel="canonical"' /tmp/ragdoll-page.html
+            grep -q "https://ragdoll-reality.github.io${path}" /tmp/ragdoll-page.html
+            if grep -Eq 'ragdollreality\\.github\\.io' /tmp/ragdoll-page.html; then echo "Old domain leaked into rendered HTML"; exit 1; fi
+            echo "PASS: ${url}"
+          done
+          curl -fLsS --retry 6 --retry-delay 5 --retry-all-errors "${base}/sitemap.xml" -o /tmp/ragdoll-sitemap.xml
+          for path in / /weapons/ /how-to-unlock-weapons/ /zombies/ /horde-mode/ /events/; do
+            grep -q "https://ragdoll-reality.github.io${path}" /tmp/ragdoll-sitemap.xml
+          done
+          curl -fLsS --retry 6 --retry-delay 5 --retry-all-errors "${base}/robots.txt" | grep -qi 'sitemap:'
+          echo "PASS: six live canonical routes, headings, sitemap and robots"
