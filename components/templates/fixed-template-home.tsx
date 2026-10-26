@@ -5,17 +5,15 @@ import { siteConfig } from "@/config/site";
 import { siteSkin } from "@/config/skin";
 import type { HomePageDefinition, InternalLink } from "@/config/types";
 import { visibleCorePages } from "@/content/registry";
-import { esc, renderFixedDocument } from "@/lib/fixed-template/render";
+import { esc, renderFixedDocument, renderFixedSections } from "@/lib/fixed-template/render";
 import { homeSchemas } from "@/lib/schema";
 import { assetPath, routePath } from "@/lib/urls";
 
 function supplement(home: HomePageDefinition): string {
-  const sections = home.sections.map((section) => {
-    const paragraphs = (section.paragraphs ?? []).map((paragraph) => `<p>${esc(paragraph)}</p>`).join("");
-    const intro = section.intro ? `<p>${esc(section.intro)}</p>` : "";
-    return `<section id="${esc(section.id)}"><h2>${esc(section.heading)}</h2>${intro}${paragraphs}</section>`;
-  }).join("");
-  return sections;
+  const gameUrl=siteConfig.game.officialUrl;
+  const external=gameUrl&&gameUrl.startsWith("https://www.roblox.com/games/")?'<p class="fixed-official"><a href="'+esc(gameUrl)+'" rel="noopener noreferrer">Play Ragdoll Reality on Roblox</a> · Independent fan-made guide; not affiliated with the developer or Roblox.</p>':"";
+  const sources=gameUrl?'<p class="fixed-sources">Source: <a href="'+esc(gameUrl)+'" rel="noopener noreferrer">official developer description</a>.</p>':"";
+  return '<div class="fixed-rich">'+external+renderFixedSections(home.sections)+sources+'</div>';
 }
 
 export function FixedTemplateHome({ home }: { home: HomePageDefinition }) {

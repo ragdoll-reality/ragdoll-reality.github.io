@@ -4,29 +4,17 @@ import { siteConfig } from "@/config/site";
 import { siteSkin } from "@/config/skin";
 import type { SeoPageDefinition } from "@/config/types";
 import { enabledLegalPages, getRelatedPages, visibleCorePages } from "@/content/registry";
-import { esc, renderFixedDocument } from "@/lib/fixed-template/render";
+import { esc, renderFixedDocument, renderFixedSections } from "@/lib/fixed-template/render";
 import { pageSchemas } from "@/lib/schema";
 import { assetPath, routePath } from "@/lib/urls";
 
 function articleInner(page: SeoPageDefinition): string {
-  const sections = page.sections.map((section) => {
-    const paragraphs = [
-      section.intro ? `<p>${esc(section.intro)}</p>` : "",
-      ...(section.paragraphs ?? []).map((paragraph) => `<p>${esc(paragraph)}</p>`),
-    ].join("");
-    const steps = section.steps?.length
-      ? `<ol>${section.steps.map((step) => `<li><b>${esc(step.heading)}</b> ${esc(step.description)}</li>`).join("")}</ol>`
-      : "";
-    return `<section id="${esc(section.id)}"><h2>${esc(section.heading)}</h2>${paragraphs}${steps}</section>`;
-  }).join("");
-  const faq = page.faq?.length
-    ? `<section id="faq"><h2>FAQ</h2>${page.faq.map((item) => `<p><b>${esc(item.question)}</b> ${esc(item.answer)}</p>`).join("")}</section>`
-    : "";
-  const related = getRelatedPages(page);
-  const relatedHtml = related.length
-    ? `<section id="related"><h2>Related</h2><ul>${related.map((item) => `<li><a href="${esc(siteSkin() === "arcade-play" ? assetPath(routePath(item.slug)) : routePath(item.slug))}">${esc(item.navLabel)}</a></li>`).join("")}</ul></section>`
-    : "";
-  return `<p>${esc(page.hero.lead)}</p>${sections}${faq}${relatedHtml}`;
+  const faq=page.faq?.length?'<section id="faq" class="fixed-rich-section"><h2>Frequently Asked Questions</h2>'+page.faq.map(x=>'<div class="fixed-rich-sub"><h3>'+esc(x.question)+'</h3><p>'+esc(x.answer)+'</p></div>').join("")+'</section>':"";
+  const related=getRelatedPages(page);
+  const links=related.length?'<nav class="fixed-related" aria-label="More Ragdoll Reality guides">'+related.map(x=>'<a href="'+esc(routePath(x.slug))+'"><strong>'+esc(x.navLabel)+'</strong></a>').join("")+'</nav>':"";
+  const gameUrl=siteConfig.game.officialUrl;
+  const source='<aside class="fixed-sources"><strong>Original sources</strong><p>'+(gameUrl?'<a href="'+esc(gameUrl)+'" rel="noopener noreferrer">Official Ragdoll Reality game page</a>':"")+(page.slug==="events"?' · <a href="https://allthings.how/ragdoll-reality-events-schedule/" rel="noopener noreferrer">October 2026 event calendar (third-party)</a>':"")+'</p></aside>';
+  return '<div class="fixed-rich"><p class="fixed-rich-intro">'+esc(page.hero.lead)+'</p>'+renderFixedSections(page.sections)+faq+links+source+'</div>';
 }
 
 export function FixedTemplateInner({ page }: { page: SeoPageDefinition }) {

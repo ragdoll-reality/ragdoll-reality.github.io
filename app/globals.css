@@ -529,3 +529,28 @@ html[data-skin="horror"] .skin-article-hero { border: 0; min-height: 28vh; }
   .skin-nav { display: none; width: 100%; }
   .skin-nav.is-open { display: flex; flex-direction: column; padding-bottom: .8rem; }
 }
+
+.fixed-rich{max-width:1120px;margin:24px auto;background:#fff;color:#1e2834;border:1px solid #d7dde5;border-radius:5px;padding:clamp(18px,3vw,32px);overflow-wrap:anywhere}
+.fixed-rich-section{padding:10px 0 22px;border-bottom:1px solid #d7dde5;scroll-margin-top:24px}
+.fixed-rich-section:last-child{border-bottom:0}
+.fixed-rich-section h2{font-size:clamp(21px,2.3vw,29px);color:#1e344d;line-height:1.25;margin:16px 0 12px}
+.fixed-rich-section h3{font-size:clamp(17px,1.8vw,21px);color:#183956;line-height:1.35;margin:24px 0 9px}
+.fixed-rich p,.fixed-rich li{font-size:15px;line-height:1.8;color:#394859;margin:10px 0}
+.fixed-rich-intro{font-size:16px!important;color:#263c52!important}
+.fixed-rich-sub{padding:0 0 6px}
+.fixed-official{background:#eef4fa;padding:14px 18px;border-left:4px solid #2f6fa3}
+.fixed-official a,.fixed-sources a{color:#175b92;text-decoration:underline}
+.fixed-table-scroll{overflow:auto;margin:18px 0;border:1px solid #d7dde5;border-radius:4px}
+.fixed-rich table{width:100%;border-collapse:collapse;min-width:520px;font-size:14px}
+.fixed-rich caption{text-align:left;padding:13px;background:#eaf1f7;font-weight:700}
+.fixed-rich th,.fixed-rich td{padding:11px 12px;text-align:left;border-bottom:1px solid #d7dde5;vertical-align:top}
+.fixed-rich th{background:#f3f6f9;color:#1e344d}
+.fixed-rich tr:nth-child(even){background:#fafbfc}
+.fixed-steps{padding-left:26px}
+.fixed-steps li{margin:12px 0}
+.fixed-related{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0}
+.fixed-related a{display:grid;gap:4px;background:#eff5fa;border:1px solid #cfdde8;padding:13px;color:#174974;text-decoration:none}
+.fixed-related span{font-size:13px;line-height:1.5;color:#455668}
+.fixed-related a:hover,.fixed-related a:focus-visible{border-color:#175b92;background:#e1effa}
+.fixed-sources{padding:14px 17px;background:#f5f8fb;margin:22px 0;font-size:14px}
+@media(max-width:640px){.fixed-rich{padding:16px}.fixed-rich table{min-width:420px}.fixed-related{grid-template-columns:1fr}}

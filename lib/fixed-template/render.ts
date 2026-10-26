@@ -1,3 +1,5 @@
+import type { PageSection, DataTable } from "@/config/types";
+import { routePath } from "@/lib/urls";
 import { accentOverrideCss, resolveAccent, templatePack, type TemplatePack, type TemplateSkin } from "./catalog";
 import { SPEC_HTML } from "./spec-html";
 
@@ -9,6 +11,26 @@ export interface FixedTemplateInput {
   skin: TemplateSkin | string; page: "home" | "inner"; accentColorId?: string | null; gameName: string;
   nav: TemplateLink[]; currentSlug?: string | null; homeHref: string; logoUrl?: string | null; bannerUrl?: string | null;
   heading?: string | null; lead?: string | null; articleHtml?: string | null; entries?: TemplateEntry[] | null; supplementHtml?: string | null;
+}
+
+function fixedTable(table:DataTable):string {
+  const head=table.columns.map(x=>'<th scope="col">'+esc(x)+'</th>').join("");
+  const body=table.rows.map(row=>'<tr>'+row.map(x=>'<td>'+esc(x)+'</td>').join("")+'</tr>').join("");
+  return '<div class="fixed-table-scroll"><table><caption>'+esc(table.caption)+'</caption><thead><tr>'+head+'</tr></thead><tbody>'+body+'</tbody></table></div>';
+}
+export function renderFixedSections(sections:PageSection[]):string {
+  const p=(x:string)=>'<p>'+esc(x)+'</p>';
+  return sections.map(section=>{
+    const intro=section.intro?'<p class="fixed-rich-intro">'+esc(section.intro)+'</p>':"";
+    const paras=(section.paragraphs??[]).map(p).join("");
+    const sub=(section.subsections??[]).map(s=>{
+      const bullets=s.bullets?.length?'<ul>'+s.bullets.map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul>':"";
+      return '<div class="fixed-rich-sub"><h3>'+esc(s.heading)+'</h3>'+s.paragraphs.map(p).join("")+bullets+(s.table?fixedTable(s.table):"")+'</div>';
+    }).join("");
+    const steps=section.steps?.length?'<ol class="fixed-steps">'+section.steps.map(x=>'<li><strong>'+esc(x.heading)+'</strong>'+p(x.description)+'</li>').join("")+'</ol>':"";
+    const links=section.links?.length?'<nav class="fixed-related" aria-label="Related guides">'+section.links.map(x=>'<a href="'+esc(routePath(x.slug))+'"><strong>'+esc(x.label)+'</strong>'+(x.description?'<span>'+esc(x.description)+'</span>':"")+'</a>').join("")+'</nav>':"";
+    return '<section class="fixed-rich-section" id="'+esc(section.id)+'"><h2>'+esc(section.heading)+'</h2>'+intro+paras+sub+steps+(section.table?fixedTable(section.table):"")+links+'</section>';
+  }).join("");
 }
 
 export function esc(value: string): string { return value.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -63,6 +85,7 @@ function replaceCrumbs(html: string, homeHref: string, current: string | null): 
 }
 
 function injectTemplateAssets(html: string, input: FixedTemplateInput): string {
+  html = html.replace(/<svg[^>]*aria-label="Abstract Drag[^"]*guide cover art"[^>]*>[\s\S]*?<\/svg>/g, "");
   let next = html.replace(/<(?:p|span)[^>]*data-nav-status[^>]*>[\s\S]*?<\/(?:p|span)>/g, "");
   if (input.bannerUrl) {
     const banner = `<img class="template-banner-image" alt="" src="${safeAttr(input.bannerUrl)}">`;
@@ -127,7 +150,7 @@ function neutralizeDemoCopy(html: string, input: FixedTemplateInput): string {
 function applyCopy(html: string, input: FixedTemplateInput): string {
   let next=neutralizeDemoCopy(html,input);
   if(input.heading)next=next.replace(/<h1>[\s\S]*?<\/h1>/,`<h1>${esc(input.heading)}</h1>`);
-  if(input.lead){ if(next.includes('<p class="lead">'))next=next.replace(/<p class="lead">[\s\S]*?<\/p>/,`<p class="lead">${esc(input.lead)}</p>`); }
+  if(input.lead){ if(next.includes('<p class="lead">'))next=next.replace(/<p class="lead">[\s\S]*?<\/p>/,`<p class="lead">${esc(input.lead)}</p>`); else next=next.replace(/(<section class="panel hero">[\s\S]*?<\/h1>)<p>[\s\S]*?<\/p>/,`$1<p>${esc(input.lead)}</p>`); }
   return next;
 }
 
