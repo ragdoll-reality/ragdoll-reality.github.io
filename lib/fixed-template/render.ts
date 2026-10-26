@@ -169,6 +169,13 @@ function replaceArticleBody(html:string,articleHtml:string):string{
 }
 function insertSupplement(html:string,supplement:string){if(html.includes("</main>"))return html.replace("</main>",`${supplement}</main>`);if(html.includes("<footer"))return html.replace("<footer",`${supplement}<footer`);return html.replace("</body>",`${supplement}</body>`)}
 
+function applyFixedFooter(html:string,input:FixedTemplateInput):string {
+  const links=input.nav.map(item=>'<a href="'+safeAttr(item.href)+'">'+esc(item.label)+'</a>').join("");
+  const legal='<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/contact/">Contact</a>';
+  const footer='<footer class="global-footer"><div class="wrap global-footer-grid"><div><strong class="global-footer-brand">'+esc(input.gameName)+'</strong><p>Independent, unofficial Roblox game guide. Not affiliated with Roblox or the developer. Game facts are attributed to their sources on the relevant pages.</p></div><div><b>Guides</b><a href="'+safeAttr(input.homeHref)+'">Home</a>'+links+'</div><div><b>Site</b>'+legal+'</div></div></footer>';
+  return html.replace(/<footer[^>]*>[\s\S]*?<\/footer>/,footer);
+}
+
 export function renderFixedTemplate(input:FixedTemplateInput):string{
   const {pack,html:source}=templateSource(input.skin,input.page); const paint=resolveAccent(pack.skin,input.accentColorId);
   const currentLabel=input.page==="inner"?(input.nav.find(x=>slugOnly(x.slug)===slugOnly(input.currentSlug||""))?.label||input.heading||"Guide"):null;
@@ -183,6 +190,7 @@ export function renderFixedTemplate(input:FixedTemplateInput):string{
   if(input.page==="inner"&&input.articleHtml)html=replaceArticleBody(html,input.articleHtml);
   if(input.supplementHtml)html=insertSupplement(html,input.supplementHtml);
   html=applyCopy(html,input);
+  html=applyFixedFooter(html,input);
   html=html.replace(/--accent:#[0-9A-Fa-f]{6}/,`--accent:${paint.textAccent}`);
   html=html.replace("</style>",`${accentOverrideCss(pack.skin,paint)}</style>`);
   if(!/<body[^>]*data-template=/.test(html))html=html.replace(/<body([^>]*)>/,`<body$1 data-template="${pack.specId.replace(/^\d+-/,"")}">`);
