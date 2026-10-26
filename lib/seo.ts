@@ -18,7 +18,7 @@ export function pageMetadata(page: MetadataPage): Metadata {
   const shouldFollow = isLegal ? true : shouldIndex;
 
   return {
-    title: page.title,
+    title: { absolute: page.title },
     description: page.description,
     alternates: { canonical },
     robots: {

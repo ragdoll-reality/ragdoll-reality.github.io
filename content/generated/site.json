@@ -1,8 +1,8 @@
 {
-  "readyForLaunch": false,
-  "siteName": "Ragdoll Reality Guide",
+  "readyForLaunch": true,
+  "siteName": "Ragdoll Reality Wiki",
   "shortName": "Ragdoll Reality",
-  "description": "Ragdoll Reality guides, walkthroughs, tips, updates, and reference information.",
+  "description": "Independent Ragdoll Reality Roblox wiki with sourced weapon lists, kill-based unlocks, graveyard zombies, Horde mode and dated event information.",
   "language": "en",
   "locale": "en_US",
   "authorName": "Editorial Team",
@@ -54,11 +54,11 @@
   "game": {
     "name": "Ragdoll Reality",
     "platform": "Roblox",
-    "developer": "",
+    "developer": "I am eating",
     "genre": "",
     "officialUrl": "https://www.roblox.com/games/127932298993998"
   },
   "seo": {
-    "titleTemplate": "%s | Ragdoll Reality Guide"
+    "titleTemplate": "%s"
   }
 }

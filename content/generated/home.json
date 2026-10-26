@@ -2,29 +2,290 @@
   "enabled": true,
   "slug": "",
   "pageType": "home",
-  "title": "Ragdoll Reality Guide",
-  "description": "Guides, walkthroughs, tips, updates, and reference information for Ragdoll Reality.",
+  "title": "Ragdoll Reality Wiki: Weapons, Zombies & Updates",
+  "description": "Explore Ragdoll Reality on Roblox with verified weapon info, zombie and Horde guides, game updates, and a direct link to the official experience.",
   "navVisible": true,
   "hero": {
-    "eyebrow": "Game guide",
-    "heading": "Ragdoll Reality",
-    "lead": "Guides, walkthroughs, tips, updates, and reference information for Ragdoll Reality.",
-    "supportingText": "Browse current game information and practical guides.",
+    "eyebrow": "Independent Roblox game guide",
+    "heading": "Ragdoll Reality Wiki & Roblox Game Guide",
+    "lead": "Ragdoll Reality is a Roblox physics sandbox by I am eating. Dummies react to impacts at different body locations; the game also features weapon unlocks, a graveyard zombie mechanic, and a Horde button.",
+    "supportingText": "Need the weapon roster, help unlocking equipment, a zombie walkthrough, or the next event? Choose a guide below. This is an independent fan-made resource, not the game itself.",
+    "primaryLink": {
+      "label": "Browse Weapons",
+      "slug": "weapons"
+    },
     "secondaryLink": {
-      "label": "Open official game page",
-      "url": "https://www.roblox.com/games/127932298993998"
+      "label": "Play on Roblox",
+      "url": "https://www.roblox.com/games/127932298993998/Ragdoll-Reality"
     }
   },
   "sections": [
     {
-      "id": "start-here",
-      "heading": "Game information",
-      "paragraphs": [
-        "Current Ragdoll Reality guides and reference information will be published here."
+      "id": "what-is-ragdoll-reality",
+      "heading": "What Is Ragdoll Reality?",
+      "intro": "Ragdoll Reality is a Roblox experience focused on experimenting with physics, damage reactions, movement, weapons, and environmental hazards. If you are looking for the actual game rather than a guide, use the official Roblox link above.",
+      "subsections": [
+        {
+          "heading": "Official Roblox Game and Creator",
+          "paragraphs": [
+            "The experience titled Ragdoll Reality is published on Roblox under the creator name I am eating. Its official experience ID is 127932298993998. Checking that ID is a useful way to distinguish this specific game from similarly named ragdoll simulators and video compilations.",
+            "The Roblox listing is the source for the game's current public feature claims; menus, availability, and individual item requirements may change as the developer releases updates. This site organizes those claims by player task instead of presenting itself as the game's publisher."
+          ]
+        },
+        {
+          "heading": "What Makes the Physics Sandbox Different?",
+          "paragraphs": [
+            "The game's description emphasizes reactions at the part of a dummy that was hit: a leg impact can change how it moves, while an arm impact changes that limb's response. Dummies can also stumble, retreat, fight back, and recover instead of remaining perfectly still.",
+            "The map features an 80-stud tower and equipment such as the shredder, train, wrecking ball, spike pit, human cannon, and seesaw. Those are officially named environmental attractions, not guarantees of a specific reward or a fixed damage value. Experiment with one interaction at a time to see what changes."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Browse the confirmed weapon names",
+          "slug": "weapons",
+          "description": "See the official names grouped by interaction, rather than an invented ranking."
+        },
+        {
+          "label": "How to create zombies",
+          "slug": "zombies",
+          "description": "Use the graveyard and understand infection."
+        }
+      ]
+    },
+    {
+      "id": "weapons-combat",
+      "heading": "Ragdoll Reality Weapons and Combat",
+      "intro": "Weapon names and weapon acquisition answer two different questions. Use the directory to identify equipment; use the unlock guide when a piece of equipment is not yet accessible.",
+      "subsections": [
+        {
+          "heading": "Weapon Types You Can Explore",
+          "paragraphs": [
+            "The developer advertises more than twenty weapons or interactions. Its public description names Fists, Push, Grab, Pistol, Bat, Machete, Shotgun, Sniper, Minigun, Rocket Launcher, Flamethrower, and C4. These twelve names are a sourced subset, not a claim that the complete inventory has been photographed.",
+            "For quick orientation, divide the named items into hand/handling actions, close-range tools, firearms, and explosives or fire equipment. These are convenient categories for this guide, not a claim about the exact names of the game's on-screen menu tabs."
+          ]
+        },
+        {
+          "heading": "How Weapon Unlocks Work",
+          "paragraphs": [
+            "The official description says new weapons are unlocked with kills. It does not provide a per-weapon kill table, a confirmed unlock order, or a universal price chart. If you find a weapon locked in your build, first check the requirement actually shown by the game rather than relying on a guessed threshold.",
+            "The two dedicated guides serve separate jobs: the weapons list helps you recognize names and roles; the unlock guide walks through checking progress and documenting a lock that does not clear."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Browse the confirmed weapon names",
+          "slug": "weapons",
+          "description": "See the official names grouped by interaction, rather than an invented ranking."
+        },
+        {
+          "label": "How weapon unlocks work",
+          "slug": "how-to-unlock-weapons",
+          "description": "Understand kill-based progress and check your own unlock status."
+        }
+      ]
+    },
+    {
+      "id": "zombies-infection",
+      "heading": "Zombies, Graveyard, and Infection",
+      "intro": "The Halloween description introduces a route from ordinary dummy to zombie and then to further infections. That is separate from the wave-starting Horde control.",
+      "subsections": [
+        {
+          "heading": "How Zombies Appear",
+          "paragraphs": [
+            "According to the Roblox listing, throwing a dummy into the graveyard causes it to rise as a zombie. This is the defining graveyard interaction. The listing does not include map coordinates or a published button-by-button control diagram, so look for the marked graveyard area in the current version.",
+            "The value of this method is control: you begin with a dummy of your choice and cause a conversion. If your goal is to understand why nearby dummies are changing too, the next part is the bite infection mechanic."
+          ]
+        },
+        {
+          "heading": "Zombie Types and Infection",
+          "paragraphs": [
+            "The developer identifies slow, normal, and fast zombies. It also says a bitten dummy becomes infected and turns. That means one conversion can lead to another without carrying each dummy back to the graveyard.",
+            "These type labels do not supply documented speed, damage, or health numbers. Use the zombies guide for the transformation sequence and how to recognize the distinction between the graveyard action and the spreading infection chain."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "How to create zombies",
+          "slug": "zombies",
+          "description": "Use the graveyard and understand infection."
+        },
+        {
+          "label": "Start a zombie horde",
+          "slug": "horde-mode",
+          "description": "Use the Horde button and compare wave play with graveyard spawning."
+        }
+      ]
+    },
+    {
+      "id": "horde-survival",
+      "heading": "Horde Mode and Survival",
+      "intro": "The Horde button is the confirmed route for starting a zombie wave. It does not require repeating the individual graveyard conversion described above.",
+      "subsections": [
+        {
+          "heading": "How to Trigger a Horde",
+          "paragraphs": [
+            "The official feature description says to press the Horde button to start a wave. The current screen location and visual design of that button are not supplied by the listing; the Horde guide therefore distinguishes this confirmed action from menu positions that can only be verified by opening a live session.",
+            "Before activating a wave, look around the current playground, identify how you will move out of a crowded area, and select an item already available to your account. These are preparation suggestions, not claims about a required loadout."
+          ]
+        },
+        {
+          "heading": "How Horde Differs from the Graveyard",
+          "paragraphs": [
+            "Graveyard play converts a carried dummy and can develop into a chain of bites; Horde play summons a group through a dedicated control. This difference matters when searching for instructions. Asking 'how to spawn one zombie' should lead to the graveyard guide, while 'how to start horde' leads to its own page.",
+            "The Halloween update and the October 24 Zombie Night event are not interchangeable. A special event may have its own limited-time rules; do not assume any event-only rewards or bosses are present in ordinary Horde play."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Start a zombie horde",
+          "slug": "horde-mode",
+          "description": "Use the Horde button and compare wave play with graveyard spawning."
+        },
+        {
+          "label": "How to create zombies",
+          "slug": "zombies",
+          "description": "Use the graveyard and understand infection."
+        }
+      ]
+    },
+    {
+      "id": "latest-events",
+      "heading": "Latest Ragdoll Reality Events and Updates",
+      "intro": "The official Roblox description promises weekly updates. For named dates, we separate developer-visible features from the schedule reported by third-party event coverage.",
+      "subsections": [
+        {
+          "heading": "October 24 Zombie Night — Past Event",
+          "paragraphs": [
+            "The October 24, 2026 Zombie Night window is in the past as of this review on October 26. The event schedule published by AllThingsHow listed a 90-minute session from 2:00 to 3:30 p.m. Eastern daylight time (18:00–19:30 UTC). It is a historical listing, not a currently running event.",
+            "Reported details about competitive prizes or an event boss should not be mistaken for a permanent feature of the base sandbox. We do not treat a third-party event report as independent proof that a specific prize was delivered."
+          ]
+        },
+        {
+          "heading": "October 28 New Content — Scheduled, Not Released",
+          "paragraphs": [
+            "A published event calendar lists New Content / Big Update for October 28, 2026, with a reported window of 1:00–6:00 p.m. EDT (17:00–22:00 UTC). The content itself is not specified in the verified official game description; the date is a schedule to recheck, not a published patch log.",
+            "Always use the official Roblox experience or its event listing for the latest timing and availability. Our events page keeps the historical and upcoming entries clearly separated, with source notes and time zones."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Current events and updates",
+          "slug": "events",
+          "description": "See the reported October 28 event and the October 24 archive."
+        }
+      ]
+    },
+    {
+      "id": "guide-directory",
+      "heading": "Official Links and Guide Directory",
+      "intro": "Pick the page that fits your immediate question. Each topic has one canonical guide, so you do not need to compare several nearly identical pages.",
+      "subsections": [
+        {
+          "heading": "Play the Game",
+          "paragraphs": [
+            "The official Ragdoll Reality experience is available through Roblox at the linked game ID. This fan-made site provides reading material and directions; it does not host the playable Roblox client.",
+            "For a new player, a sensible sequence is to find the official experience, read the weapon names if you cannot identify an item, understand kills-based unlocks if you see a lock, and then choose either the graveyard zombie action or the Horde button."
+          ]
+        },
+        {
+          "heading": "Explore Every Guide",
+          "paragraphs": [
+            "Weapons answers 'what equipment is named?' Unlock Weapons answers 'how do new weapons open?' Zombies answers 'how does a dummy turn?' Horde Mode answers 'how do I start a wave?' Events answers 'what is coming next and which dates are over?'",
+            "Every guide has its own examples, directly visible first-screen answer, detailed sections, and links to the closest related task. This structure is intended to be useful whether you arrived through the homepage or a specific search result."
+          ]
+        }
+      ],
+      "table": {
+        "caption": "Which Ragdoll Reality guide answers your question?",
+        "columns": [
+          "Player question",
+          "Best page",
+          "What you will find"
+        ],
+        "rows": [
+          [
+            "What weapons are named?",
+            "Weapons list",
+            "Sourced equipment names and categories"
+          ],
+          [
+            "Why is this weapon locked?",
+            "Unlock weapons",
+            "Kills-based unlock information and a checking workflow"
+          ],
+          [
+            "How do I make a zombie?",
+            "Zombies guide",
+            "Graveyard spawning and infection"
+          ],
+          [
+            "How do I call a whole wave?",
+            "Horde mode",
+            "The Horde button and preparation"
+          ],
+          [
+            "When is the next update?",
+            "Events",
+            "Dated reports and official source guidance"
+          ]
+        ]
+      },
+      "links": [
+        {
+          "label": "Browse the confirmed weapon names",
+          "slug": "weapons",
+          "description": "See the official names grouped by interaction, rather than an invented ranking."
+        },
+        {
+          "label": "How weapon unlocks work",
+          "slug": "how-to-unlock-weapons",
+          "description": "Understand kill-based progress and check your own unlock status."
+        },
+        {
+          "label": "How to create zombies",
+          "slug": "zombies",
+          "description": "Use the graveyard and understand infection."
+        },
+        {
+          "label": "Start a zombie horde",
+          "slug": "horde-mode",
+          "description": "Use the Horde button and compare wave play with graveyard spawning."
+        },
+        {
+          "label": "Current events and updates",
+          "slug": "events",
+          "description": "See the reported October 28 event and the October 24 archive."
+        }
       ]
     }
   ],
-  "faq": [],
+  "faq": [
+    {
+      "question": "Where can I play Ragdoll Reality?",
+      "answer": "Open the official Ragdoll Reality experience on Roblox, game ID 127932298993998. This guide site does not run the Roblox game in the browser."
+    },
+    {
+      "question": "How do I get new weapons in Ragdoll Reality?",
+      "answer": "The official listing confirms that kills unlock weapons. For individual requirements, check the current game interface; exact thresholds are not published in the public description."
+    },
+    {
+      "question": "Does Ragdoll Reality have zombies?",
+      "answer": "Yes. The official Halloween description says a dummy thrown into the graveyard rises as a zombie and bitten dummies can become infected."
+    },
+    {
+      "question": "What is Ragdoll Reality Horde mode?",
+      "answer": "Horde is the game's button-triggered zombie-wave activity, different from turning an individual dummy at the graveyard."
+    },
+    {
+      "question": "When is the next Ragdoll Reality update?",
+      "answer": "A third-party schedule lists a New Content event for October 28, 2026. Treat the schedule as subject to change and check the Roblox experience for the current event notice."
+    }
+  ],
   "screenshots": [],
   "lastReviewed": "2026-10-26"
 }
