@@ -186,8 +186,8 @@ jobs:
             const response=await page.goto(base+route,{waitUntil:"domcontentloaded",timeout:40000});
             if(!response||!response.ok())throw new Error("HTTP failed "+width+route);
             await page.locator('iframe[data-adsterra-banner-frame]').waitFor({timeout:15000});
-            await page.locator('script[data-adsterra-native-script]').waitFor({timeout:15000});
-            await page.locator('script[data-adsterra-social-script]').waitFor({timeout:15000});
+            await page.locator('script[data-adsterra-native-script]').waitFor({state:"attached",timeout:15000});
+            await page.locator('script[data-adsterra-social-script]').waitFor({state:"attached",timeout:15000});
             await page.waitForTimeout(2200);
             const device=width<768?"mobile":"desktop";
             const actualDevice=await page.locator('iframe[data-adsterra-banner-frame]').getAttribute("data-adsterra-banner-frame");
