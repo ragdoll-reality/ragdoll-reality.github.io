@@ -22,8 +22,6 @@ jobs:
       NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
       NEXT_PUBLIC_CUSTOM_DOMAIN: ${{ vars.NEXT_PUBLIC_CUSTOM_DOMAIN }}
       NEXT_PUBLIC_THEME_PRESET: ${{ vars.NEXT_PUBLIC_THEME_PRESET }}
-      NEXT_PUBLIC_ADSTERRA_NATIVE_SCRIPT_URL: ${{ secrets.NEXT_PUBLIC_ADSTERRA_NATIVE_SCRIPT_URL }}
-      NEXT_PUBLIC_ADSTERRA_NATIVE_CONTAINER_ID: ${{ secrets.NEXT_PUBLIC_ADSTERRA_NATIVE_CONTAINER_ID }}
       BING_SITE_VERIFICATION: ${{ secrets.BING_SITE_VERIFICATION }}
     steps:
       - uses: actions/checkout@v4
@@ -140,6 +138,8 @@ jobs:
              fail(data.overflow<=3,"horizontal viewport overflow");
              fail(data.canonical===origin+route,"wrong canonical");
              fail(data.textLength>2200,"insufficient visible page content");
+             const adMarkers=await page.locator("[data-adsterra-banner-slot], [data-adsterra-native-slot]").count();
+             fail(adMarkers===2,"expected one Banner and one Native ad placement, got "+adMarkers);
              if(route==="/")fail(data.coverHeight>=100&&data.coverHeight<=320,"hero image occupies excessive screen");
              else fail(data.active.length===1&&data.active[0]===route,"incorrect active nav state");
              console.log("UI PASS",width+"px",route,"cover="+Math.round(data.coverHeight),"overflow="+data.overflow);
@@ -160,3 +160,52 @@ jobs:
           
           SITE_QA_JS
           node /tmp/ragdoll-ui-check.cjs
+
+      - name: Real original-provider ad request audit (not mocked)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/ragdoll-real-ad-qa.cjs <<'REAL_AD_JS'
+          const {chromium} = require("/tmp/ragdoll-ui-qa/node_modules/playwright");
+          const base="https://ragdoll-reality.github.io";
+          const urls={
+            desktop:"https://bauval.org/22/a9cf3d07ce3e9748ebc16ce0a5b56cea",
+            mobile:"https://bauval.org/22/e0d404f091f7dd3d2ae0d96a7e1db930",
+            native:"https://bauval.org/21/8e294e8bfad4fc3a0d28292c5cb095f9",
+            social:"https://bauval.org/14/fa35bd0f1665af4077363dfcebebaef1"
+          };
+          (async()=>{
+           const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+           for(const [width,route] of [[1440,"/"],[1440,"/weapons/"],[375,"/"],[375,"/weapons/"]]){
+            const context=await browser.newContext({viewport:{width,height:850}});
+            const page=await context.newPage();
+            const traffic=[];
+            page.on("request",request=>{if(request.url().startsWith("https://bauval.org/"))traffic.push({type:"request",url:request.url()})});
+            page.on("response",response=>{if(response.url().startsWith("https://bauval.org/"))traffic.push({type:"response",url:response.url(),status:response.status()})});
+            page.on("requestfailed",request=>{if(request.url().startsWith("https://bauval.org/"))traffic.push({type:"failed",url:request.url(),error:request.failure()?.errorText})});
+            const response=await page.goto(base+route,{waitUntil:"domcontentloaded",timeout:40000});
+            if(!response||!response.ok())throw new Error("HTTP failed "+width+route);
+            await page.locator('iframe[data-adsterra-banner-frame]').waitFor({timeout:15000});
+            await page.locator('script[data-adsterra-native-script]').waitFor({timeout:15000});
+            await page.locator('script[data-adsterra-social-script]').waitFor({timeout:15000});
+            await page.waitForTimeout(2200);
+            const device=width<768?"mobile":"desktop";
+            const actualDevice=await page.locator('iframe[data-adsterra-banner-frame]').getAttribute("data-adsterra-banner-frame");
+            if(actualDevice!==device)throw new Error("Wrong banner device "+actualDevice);
+            const nativeCount=await page.locator('[id="container-8e294e8bfad4fc3a0d28292c5cb095f9"]').count();
+            const nativeScripts=await page.locator('script[data-adsterra-native-script]').count();
+            const socialScripts=await page.locator('script[data-adsterra-social-script]').count();
+            if(nativeCount!==1||nativeScripts!==1||socialScripts!==1)throw new Error("Duplicate or missing provider nodes "+width+route);
+            const requested=traffic.filter(x=>x.type==="request").map(x=>x.url);
+            for(const key of [device,"native","social"]){if(!requested.includes(urls[key]))throw new Error("No real browser request for "+key+" "+width+route+"; "+JSON.stringify(traffic))}
+            if(requested.includes(urls[device==="desktop"?"mobile":"desktop"]))throw new Error("Inactive banner requested "+width+route);
+            if(requested.filter(x=>x===urls[device]).length!==1)throw new Error("Banner initialized more than once "+width+route);
+            console.log("LIVE AD REQUEST AUDIT",width,route,JSON.stringify(traffic));
+            await context.close();
+           }
+           await browser.close();
+           console.log("LIVE AD REQUEST AUDIT: four device/page pairs initiated original GET CODE URLs; responses are logged, not assumed filled.");
+          })().catch(e=>{console.error(e);process.exit(1)});
+          
+          REAL_AD_JS
+          node /tmp/ragdoll-real-ad-qa.cjs

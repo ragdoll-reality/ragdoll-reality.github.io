@@ -1,4 +1,4 @@
-import { NativeAdSlot } from "@/components/integrations/native-ad-slot";
+import { withAdsterraPlacements } from "@/lib/ads/placements";
 import { JsonLd } from "@/components/site/json-ld";
 import { siteConfig } from "@/config/site";
 import { siteSkin } from "@/config/skin";
@@ -39,8 +39,7 @@ export function FixedTemplateInner({ page }: { page: SeoPageDefinition }) {
   return (
     <>
       <JsonLd data={pageSchemas(page)} />
-      <div dangerouslySetInnerHTML={{ __html: rendered.rest }} />
-      <div className="site-container"><NativeAdSlot /></div>
+      <div dangerouslySetInnerHTML={{ __html: page.pageType === "legal" ? rendered.rest : withAdsterraPlacements(rendered.rest, "inner") }} />
     </>
   );
 }

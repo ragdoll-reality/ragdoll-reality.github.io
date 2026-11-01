@@ -554,3 +554,14 @@ html[data-skin="horror"] .skin-article-hero { border: 0; min-height: 28vh; }
 .fixed-related a:hover,.fixed-related a:focus-visible{border-color:#175b92;background:#e1effa}
 .fixed-sources{padding:14px 17px;background:#f5f8fb;margin:22px 0;font-size:14px}
 @media(max-width:640px){.fixed-rich{padding:16px}.fixed-rich table{min-width:420px}.fixed-related{grid-template-columns:1fr}}
+
+/* Adsterra slots: intentional minimal styling without changing the fixed skin. */
+.adsterra-placement{box-sizing:border-box;width:100%;max-width:1120px;margin:18px auto;text-align:center;overflow:hidden}
+.adsterra-label{display:block;font-size:10px;letter-spacing:.06em;color:#8593a3;margin:0 0 7px;line-height:14px}
+.adsterra-banner-placement [data-adsterra-banner-mount]{min-height:90px;max-width:100%;display:flex;align-items:center;justify-content:center}
+.adsterra-native-placement{margin:18px auto 22px;min-height:0;overflow:visible}
+.adsterra-native-placement [data-adsterra-native-container]{max-width:100%;overflow-wrap:anywhere}
+@media(max-width:767px){
+ .adsterra-placement{width:100%;max-width:100%;padding:0 4px}
+ .adsterra-banner-placement [data-adsterra-banner-mount]{min-height:50px}
+}
