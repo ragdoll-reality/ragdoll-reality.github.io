@@ -8,8 +8,9 @@ type BannerCode = typeof ADSTERRA.desktop | typeof ADSTERRA.mobile;
 
 // Banner scripts may use document.write. Execute the unchanged provider setup
 // inside an isolated iframe so a late document.write cannot erase our webpage.
-// The iframe uses srcdoc, inherits the site's referrer and does not proxy a
-// provider URL. Its sandbox limits navigation/access to the parent document.
+// The iframe uses srcdoc, inherits the site's origin and referrer and does not
+// proxy a provider URL. No sandbox: a sandboxed srcdoc frame gets an opaque
+// origin, so Adsterra cannot see which site requests the banner and serves nothing.
 function makeBannerFrame(code: BannerCode, device: "desktop" | "mobile"): HTMLIFrameElement {
   const frame = document.createElement("iframe");
   frame.dataset.adsterraBannerFrame = device;
@@ -21,7 +22,6 @@ function makeBannerFrame(code: BannerCode, device: "desktop" | "mobile"): HTMLIF
   frame.style.maxWidth = "100%";
   frame.style.margin = "0 auto";
   frame.setAttribute("scrolling", "no");
-  frame.setAttribute("sandbox", "allow-scripts allow-popups allow-popups-to-escape-sandbox");
   frame.referrerPolicy = "strict-origin-when-cross-origin";
   frame.srcdoc = '<!doctype html><html><head><meta charset="utf-8"><meta name="referrer" content="strict-origin-when-cross-origin"><style>html,body{margin:0;padding:0;overflow:hidden}</style></head><body>' +
     '<script>atOptions = ' + JSON.stringify({ key: code.key, format: code.format, height: code.height, width: code.width, params: code.params }) + ';<' + '/script>' +
